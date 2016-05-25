@@ -122,6 +122,7 @@ module ActionController #:nodoc:
       def protect_from_forgery(options = {})
         options = options.reverse_merge(prepend: false)
 
+        # method_name(condition1 || condition2) <= condition1がtrueの時はcondition1が、falseの場合はcondition2が引数に渡される
         self.forgery_protection_strategy = protection_method_class(options[:with] || :null_session)
         self.request_forgery_protection_token ||= :authenticity_token
         before_action :verify_authenticity_token, options
